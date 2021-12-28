@@ -40,6 +40,7 @@ function makeHtmlBoard() {
   for (let x = 0; x < WIDTH; x++) {
     let headCell = document.createElement("td");
     headCell.setAttribute("id", x);
+    headCell.dataset.x = x;
     top.append(headCell);
   }
   htmlBoard.append(top);
@@ -47,9 +48,12 @@ function makeHtmlBoard() {
   // create remaining cells of board - nested for-loop row by row, creating a cell (td) element, setting an id attribute specific to each coordinate, and appending the cell to the DOM.
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
+    
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
       cell.setAttribute("id", `${y}-${x}`);
+      cell.dataset.x = x;
+      cell.dataset.y = y;
       row.append(cell);
     }
     htmlBoard.append(row);
@@ -68,12 +72,14 @@ function findSpotForCol(x) {
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   const piece = document.createElement("div");
-  if (player = 1){
-  piece.className = "piece p1"; 
-    } else {
+  if (currPlayer === 1){
+    piece.className = "piece p1"; 
+  } else {
     piece.className = "piece p2";
-    };
+  };
+  console.log(`${y}-${x}`);
   document.getElementById(`${y}-${x}`).appendChild(piece);
+ 
 }
 
 /** endGame: announce game end */
@@ -86,16 +92,20 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  let x = evt.target.id;
+  console.log(evt.target)
+  let x = evt.target.dataset.x;
+  console.log(x);
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
   if (y === null) {
     return;
   }
+  console.log({ x, y, currPlayer})
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
