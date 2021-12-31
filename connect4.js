@@ -14,6 +14,23 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
+function makeHeader() {
+  const heading = document.createElement("h1");
+  const resetBoard = document.createElement("button");
+  heading.innerText = "Connect - Four";
+  resetBoard.innerText = "Reset Board";
+  document.body.appendChild(heading);
+  heading.appendChild(resetBoard);
+  resetBoard.setAttribute("id", "reset-board");
+  resetBoard.addEventListener("click", refreshGame);
+}
+
+function refreshGame(e) {
+  currPlayer = 1;
+  makeBoard();
+  piece.className = ""; 
+  return console.log(e);
+}
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
@@ -64,7 +81,12 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  for (let y = HEIGHT - 1; y >= 0; y--){
+    if(!board[y][x]) {
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -74,11 +96,11 @@ function placeInTable(y, x) {
   const piece = document.createElement("div");
   if (currPlayer === 1){
     piece.className = "piece p1"; 
-  } else {
+  } else if (currPlayer){
     piece.className = "piece p2";
   };
   console.log(`${y}-${x}`);
-  document.getElementById(`${y}-${x}`).appendChild(piece);
+  document.getElementById(`${y}-${x}`).appendChild(piece); //allen wanted to change this.. to what?
  
 }
 
@@ -86,6 +108,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -94,10 +117,10 @@ function handleClick(evt) {
   // get x from ID of clicked cell
   console.log(evt.target)
   let x = evt.target.dataset.x;
-  console.log(x);
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
+  
   if (y === null) {
     return;
   }
@@ -110,6 +133,7 @@ function handleClick(evt) {
 
   // check for win
   if (checkForWin()) {
+    currPlayer = null;
     return endGame(`Player ${currPlayer} won!`);
   }
 
@@ -117,7 +141,9 @@ function handleClick(evt) {
   // TODO: check if all cells in board are filled; if so call, call endGame
 
   // switch players
+  currPlayer = currPlayer === 1 ? 2 : 1;
   // TODO: switch currPlayer 1 <-> 2
+  console.log(board);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -154,5 +180,6 @@ function checkForWin() {
   }
 }
 
+makeHeader()
 makeBoard();
 makeHtmlBoard();
