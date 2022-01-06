@@ -133,13 +133,14 @@ function handleClick(evt) {
 
   // check for win
   if (checkForWin()) {
-    currPlayer = null;
-    return endGame(`Player ${currPlayer} won!`);
+    endGame(`Player ${currPlayer} won!`);
+    return currPlayer = null;
   }
 
-  // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-
+  if(board.every(row => row.every(cell =>cell))){
+    endGame('Stalemate! No winner!');
+  }
   // switch players
   currPlayer = currPlayer === 1 ? 2 : 1;
   // TODO: switch currPlayer 1 <-> 2
