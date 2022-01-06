@@ -14,23 +14,23 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
-function makeHeader() {
-  const heading = document.createElement("h1");
-  const resetBoard = document.createElement("button");
-  heading.innerText = "Connect - Four";
-  resetBoard.innerText = "Reset Board";
-  document.body.appendChild(heading);
-  heading.appendChild(resetBoard);
-  resetBoard.setAttribute("id", "reset-board");
-  resetBoard.addEventListener("click", refreshGame);
-}
+// function makeHeader() {
+//   const heading = document.createElement("h1");
+//   const resetBoard = document.createElement("button");
+//   heading.innerText = "Connect - Four";
+//   resetBoard.innerText = "Reset Board";
+//   document.body.appendChild(heading);
+//   heading.appendChild(resetBoard);
+//   resetBoard.setAttribute("id", "reset-board");
+//   resetBoard.addEventListener("click", refreshGame);
+// }
 
-function refreshGame(e) {
-  currPlayer = 1;
-  makeBoard();
-  piece.className = ""; 
-  return console.log(e);
-}
+// function refreshGame(e) {
+//   currPlayer = 1;
+//   makeBoard();
+//   piece.className = ""; 
+//   return console.log(e);
+// }
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
