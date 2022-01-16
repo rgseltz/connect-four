@@ -10,20 +10,10 @@ const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
-
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
-// function makeHeader() {
-//   const heading = document.createElement("h1");
-//   const resetBoard = document.createElement("button");
-//   heading.innerText = "Connect - Four";
-//   resetBoard.innerText = "Reset Board";
-//   document.body.appendChild(heading);
-//   heading.appendChild(resetBoard);
-//   resetBoard.setAttribute("id", "reset-board");
-//   resetBoard.addEventListener("click", refreshGame);
-// }
+// 
 
 // function refreshGame(e) {
 //   currPlayer = 1;
@@ -34,8 +24,6 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  // board = new Array(WIDTH);
-  // board.fill(null); 
   for (let i = 0; i < HEIGHT; i++) {
     board[i] = new Array(WIDTH);
     board[i].fill(null);
@@ -99,7 +87,6 @@ function placeInTable(y, x) {
   } else if (currPlayer){
     piece.className = "piece p2";
   };
-  console.log(`${y}-${x}`);
   document.getElementById(`${y}-${x}`).appendChild(piece); //allen wanted to change this.. to what?
  
 }
@@ -115,16 +102,13 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  console.log(evt.target)
   let x = evt.target.dataset.x;
-
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
-  
+
   if (y === null) {
     return;
   }
-  console.log({ x, y, currPlayer})
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
@@ -144,7 +128,6 @@ function handleClick(evt) {
   // switch players
   currPlayer = currPlayer === 1 ? 2 : 1;
   // TODO: switch currPlayer 1 <-> 2
-  console.log(board);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -181,6 +164,20 @@ function checkForWin() {
   }
 }
 
-makeHeader()
+
+// function makeHeader() {
+  //   const heading = document.createElement("h1");
+  //   const body = document.querySelector('body');
+  //   const game = document.querySelector('#game');
+  //   const resetBoard = document.createElement("button");
+  //   heading.innerText = "Connect - Four";
+  //   resetBoard.innerText = "Reset Board";
+  //   game.prepend(heading);
+  //   heading.appendChild(resetBoard);
+  //   resetBoard.setAttribute("id", "reset-board");
+  //   resetBoard.addEventListener("click", refreshGame);
+  //   console.log(body);
+  // }
+// makeHeader()
 makeBoard();
 makeHtmlBoard();
